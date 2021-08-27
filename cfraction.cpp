@@ -18,7 +18,7 @@ fraction::fraction(const float a)
 	{
 		pow *= 10;
 	}
-	fraction b(a * static_cast<float>(pow), pow);
+	fraction b(a * static_cast<float>(pow), pow);  // NOLINT(clang-diagnostic-float-conversion)
 	b.simplify();
 	numerator = b.numerator;
 	denominator = b.denominator;
@@ -63,8 +63,8 @@ fraction fraction::inverse(const fraction a)
 {
 	fraction r;
 	if (a.getNumerator() != 0)
-		r = fraction(a.getDenominator(), a.getNumerator());
-	return simplify(r);
+		r = fraction(a.getDenominator(), a.getNumerator() != 0 ? a.getNumerator() : 1);
+	return r;
 }
 void fraction::inverse()
 {
@@ -72,13 +72,18 @@ void fraction::inverse()
 	{
 		int temp = numerator;
 		numerator = denominator;
-		denominator = temp;
+		denominator = numerator != 0 ? numerator : 1;
 	}
 }
 
 bool fraction::isLegalFraction(const fraction a)
 {
 	return (a.getDenominator() != 0);
+}
+
+bool fraction::isLegalFraction() const
+{
+	return (denominator != 0);
 }
 
 //advanced math function
@@ -269,7 +274,31 @@ ostream& operator << (ostream& os, const fraction& a)
 }
 istream& operator >> (istream& is, fraction& a)
 {
-	is >> a.numerator >> a.denominator;
+	string str, num;
+	getline(is, str);
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (str[i] == ' ' || str[i] == '/')
+		{
+			a.numerator = stoi(num);
+			num = "";
+			for (int j = i + 1; j < str.length(); j++)
+			{
+				num += str[j];
+			}
+			a.denominator = stoi(num);
+			break;
+		}
+		num += str[i];
+		if (i==str.length()-1)
+		{
+			a.numerator = stoi(num);
+		}
+	}
+	if (a.denominator == 0)
+	{
+		a.setDenominator(1);
+	}
 	return is;
 }
 

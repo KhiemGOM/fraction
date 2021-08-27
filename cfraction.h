@@ -21,6 +21,7 @@ public:
 	static fraction inverse(fraction a);
 	void inverse();
 	static bool isLegalFraction(fraction a);
+	bool isLegalFraction() const;
 
 	//advanced math function
 	static int signof(fraction a);
@@ -72,6 +73,6 @@ public:
 	explicit operator int() const;
 
 	//literal operator
-	friend fraction operator"" _frac(long double val);
-	friend fraction operator "" _frac(unsigned long long int a);
+	//friend fraction operator"" _frac(long double val);
+	//friend fraction operator "" _frac(unsigned long long int a);
 };
