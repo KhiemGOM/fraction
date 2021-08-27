@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "cfraction.h"
 using namespace std;
 
 int main()
 {
-	fraction t = 12.2_frac; //Works fine
+	fraction a = 1.2_frac;
+	cout << a;
 }

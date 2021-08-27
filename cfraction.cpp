@@ -280,7 +280,6 @@ fraction::operator float() const
 }
 fraction::operator int() const
 {
-	fraction frac;
 	return numerator / denominator;
 }
 
