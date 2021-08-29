@@ -7,5 +7,6 @@ using namespace std;
 
 auto main() -> int
 {
-	cout << 12_frac
+	fraction a = 1.2_frac;
+	cout << a;
 }
